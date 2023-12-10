@@ -1,0 +1,66 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+  Registration | ShopKart
+{% endblock title %}
+{% block content %}
+  <section class="py-5 text-center container" style="margin-top:70px;">
+    <div class="row py-lg-5">
+      <div class="col-lg-8 mx-auto">
+        <h1 class="display-4 fw-bold">Welcome to Luxa</h1>
+        <p class="lead text-muted">Discover the latest trends and shop the bestsellers. Join our community now!</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <a href="{% url 'login' %}" class="btn btn-primary me-md-2">Already a User</a>
+          <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-light py-4 my-5">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for item in catagory %}
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{item.image.url}}" class="card-img-top img-fluid mx-auto d-block" alt="Categories" style="max-width: 70%; height: 250px;">
+            <div class="card-body text-center">
+              <h5 class="card-title text-primary">{{ item.name }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              <a href="{% url 'collections' item.name %}" class="btn btn-outline-primary">Explore</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <style>
+  
+    .btn-primary {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    .btn-secondary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-outline-primary {
+      color: #28a745;
+      border-color: #28a745;
+    }
+
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+      border: none;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    
+  </style>
+{% endblock content %}

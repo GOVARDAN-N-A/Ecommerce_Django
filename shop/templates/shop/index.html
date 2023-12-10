@@ -1,0 +1,28 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+LUXA | Online Shopping
+{% endblock title %}
+
+{% block content %}
+{% include 'shop/inc/slider.html' %}
+  <div class="container my-5">
+    <h2 class="text-center mb-5">Latest Offers</h2>
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+      {% for item in products %}
+        <div class="col">
+          <div class="card border-0 shadow">
+            <img src="{{item.product_image.url}}" class="card-img-top" alt="{{ item.name }}">
+            <div class="card-body text-center">
+              <h6 class="card-title text-primary">{{ item.name }}</h6>
+              <p class="card-text">
+                <span class="text-muted"><s>Rs.{{ item.orginal_price | stringformat:'d'}}</s></span>
+                <span class="text-danger">Rs.{{ item.selling_price | stringformat:'d' }}</span>
+              </p>
+              <a href="{% url 'product_details' item.category.name item.name %}" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

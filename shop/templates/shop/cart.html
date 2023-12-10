@@ -1,0 +1,66 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+  Cart | LUXA
+{% endblock title %}
+{% block content %}
+  <section class="bg-light py-4 my-5" style="min-height:600px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Your Cart</h4>
+          <hr style="border-color:#b8bfc2;">
+        </div>
+      
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total Amount</th>
+                  <th scope="col">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart %}
+                  <tr>
+                    <td><img src="{{item.product.product_image.url}}" height="75px" width="65px" alt="{{item.product.name}}"></td>
+                    <td>{{item.product.name}}</td>
+                    <td>Rs.{{item.product.selling_price | stringformat:'d'}}</td>
+                    <td>{{item.product_qty}}</td>
+                    <td class="amt">Rs.{{item.total_cost | stringformat:'d'}}</td>
+                    <td>
+                      <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure? to Remove')" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"></i> Remove
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                <tr>
+                  <td colspan="4" class="text-end"><b>Total Amount</b></td>
+                  <td id="net" class="fw-bold">Rs.0</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm">
+                      <i class="fa fa-check-circle"></i> Check Out
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const amtNodes = document.querySelectorAll('.amt');
+      const totalAmount = Array.from(amtNodes).reduce((acc, curr) => acc + Number(curr.textContent.replace('Rs.', '').trim()), 0);
+      document.getElementById("net").innerHTML = "Rs." + totalAmount.toFixed(2);
+    });
+  </script>
+{% endblock content %}

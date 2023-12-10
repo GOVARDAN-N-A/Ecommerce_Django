@@ -1,0 +1,62 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+  Profile | LUXA
+{% endblock title %}
+{% block content %}
+  <div class="container" style="margin-top: 70px; min-height: 600px;">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="mb-4">User Profile</h2>
+        <hr class="my-4">
+        {% include 'shop/inc/message.html' %}
+      </div>
+    </div>
+    <section class="py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <!-- Display User Information -->
+            <div class="mb-4">
+              <h4>User Information</h4>
+              <p><strong>Name:</strong> {{request.user.get_full_name}}</p>
+              <p><strong>Email:</strong> {{request.user.email}}</p>
+              <p><strong>Mobile Number:</strong> {{user_profile.mobile_number}}</p>
+              <!-- Add other user details here -->
+            </div>
+
+            <!-- Update User Information Form -->
+            <form method="post" action="{% url 'update_profile' %}">
+              {% csrf_token %}
+              <div class="mb-4">
+                <label for="mobile_number" class="form-label">Mobile Number</label>
+                <input type="text" name="mobile_number" id="mobile_number" class="form-control" value="{{user_profile.mobile_number}}">
+              </div>
+              <!-- Add other fields for updating details -->
+
+              <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+
+            <!-- Change Password Form -->
+            <form method="post" action="{% url 'change_password' %}">
+              {% csrf_token %}
+              <div class="mb-4">
+                <label for="old_password" class="form-label">Old Password</label>
+                <input type="password" name="old_password" id="old_password" class="form-control">
+              </div>
+              <div class="mb-4">
+                <label for="new_password1" class="form-label">New Password</label>
+                <input type="password" name="new_password1" id="new_password1" class="form-control">
+              </div>
+              <div class="mb-4">
+                <label for="new_password2" class="form-label">Confirm New Password</label>
+                <input type="password" name="new_password2" id="new_password2" class="form-control">
+              </div>
+
+              <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock content %}

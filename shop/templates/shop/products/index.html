@@ -1,0 +1,105 @@
+{% extends 'shop/layouts/main.html' %}
+{% block title %}
+  LUXA | Online Shopping
+{% endblock title %}
+
+{% block content %}
+<section class="bg-light py-5 my-5" style="min-height: 600px;">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      {% for item in products %}
+        <div class="col mb-4">
+          <div class="card h-100">
+            <div class="position-relative overflow-hidden">
+              <img src="{% if item.product_image.url %}{{ item.product_image.url }}{% else %}/static/path/to/placeholder-image.jpg{% endif %}" class="card-img-top img-fluid" alt="{{ item.name }}" style="object-fit: cover; height: 300px; border-radius: 10px; ">
+              <div class="overlay"></div>
+              <div class="badge bg-primary product-badge">{{ item.label }}</div>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-dark">{{ item.name }}</h5>
+              <p class="card-text">
+                <span class="old-price text-muted">Rs.{{ item.orginal_price | stringformat:'d' }}</span>
+                <span class="new-price">Rs.{{ item.selling_price | stringformat:'d' }}</span>
+              </p>
+              <a href="{% url 'product_details' category_name item.name %}" class="stretched-link"></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Add custom styles -->
+<style>
+  html{
+    background-color: lightyellow;
+
+  }
+  body {
+    font-family: 'Your Chosen Font', sans-serif;
+    color: #333;
+
+  }
+
+  .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    border: none;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: 0.3s ease;
+    z-index: 1;
+    border-radius: 10px;
+  }
+
+  .card:hover .overlay {
+    opacity: 0.8;
+  }
+
+  .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.8rem;
+    z-index: 2;
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+
+  .card:hover .card-title {
+    color: #28a745;
+  }
+
+  .old-price {
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    color: #6c757d; 
+  }
+
+  .new-price {
+    font-size: 1.4rem;
+    color: #28a745; 
+  }
+</style>
+{% endblock content %}
